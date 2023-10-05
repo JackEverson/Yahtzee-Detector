@@ -1,4 +1,6 @@
 # Yahtzee-Detector
 
+This is a program designed to read a dice roll and output information about it. This is being made using OpenCV2 in C++.
+
 conda install -y -c conda-forge/label/llvm_rc clangdev
 
