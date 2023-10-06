@@ -1,0 +1,3 @@
+/home/jack/code/Yahtzee-Detector/testing/CMakeFiles/testing.dir
+/home/jack/code/Yahtzee-Detector/testing/CMakeFiles/edit_cache.dir
+/home/jack/code/Yahtzee-Detector/testing/CMakeFiles/rebuild_cache.dir

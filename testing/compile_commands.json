@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/jack/code/Yahtzee-Detector/testing",
+  "command": "/usr/bin/c++   -isystem /home/jack/anaconda3/envs/yahtzee/include/opencv4/ -o CMakeFiles/testing.dir/testing.cpp.o -c /home/jack/code/Yahtzee-Detector/testing/testing.cpp",
+  "file": "/home/jack/code/Yahtzee-Detector/testing/testing.cpp"
+}
+]
