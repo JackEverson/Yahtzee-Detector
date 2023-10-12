@@ -4,3 +4,12 @@ This is a program designed to read a dice roll and output information about it. 
 
 conda install -y -c conda-forge/label/llvm_rc clangdev
 
+to make follow the following steps:
+
+`mkdir build && cd build`
+
+`cmake ..`
+
+`make`
+
+`./yahtzee-detect`
