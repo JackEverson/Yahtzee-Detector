@@ -1,6 +1,11 @@
 #include <iostream>
+#include <opencv2/core/hal/interface.h>
+#include <opencv2/core/mat.hpp>
+#include <opencv2/core/matx.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/opencv.hpp>
 #include <opencv2/videoio.hpp>
 #include <stdio.h>
 
@@ -20,7 +25,7 @@ void help(char **av) {
        << "\tYou may also pass a video file instead of a device number" << endl
        << "\texample: " << av[0] << " video.avi" << endl
        << "\tYou can also pass the path to an image sequence and OpenCV will " "treat the sequence just like a video." << endl
-       << "\texample: " << av[0] << " right%%02d.jpg" << endl;
+       << "\texample: " << av[0] << " right%%.2d.jpg" << endl;
 }
 
 int process(VideoCapture &capture) {
@@ -28,15 +33,47 @@ int process(VideoCapture &capture) {
   char filename[200];
   string window_name = "video | q or esc to quit";
   cout << "press space to save a picture. q or esc to quit" << endl;
+
   namedWindow(window_name, WINDOW_NORMAL); // resizable window;
+
   Mat frame;
+  Mat output;
+  
 
   for (;;) {
     capture >> frame;
     if (frame.empty())
       break;
+    
+    // resize(frame, frame, Size(frame_width, frame_height), INTER_LINEAR); // I may need this later
+    output = frame.clone(); 
 
-    imshow(window_name, frame);
+    const int frame_width = output.cols;
+    const int frame_height = output.rows;
+
+    
+
+    // testing changing image matrix
+    for (int x = 0; x < frame_width; x++){
+      
+      for (int y = 0; y < frame_height; y++){
+        
+        Vec3b intensity = output.at<Vec3b>(y, x);
+        uchar blue = intensity.val[0];
+        uchar green = intensity.val[1];
+        uchar red = intensity.val[2];
+
+        if (blue <= 50 && green <= 50 && red >= 150){
+          output.at<Vec3b>(y, x) = (0, 0, 255);
+        }
+        // else {
+        //   output.at<Vec3b>(y, x) = (255, 255, 255);
+        // }
+
+      }
+    }
+
+    imshow(window_name, output);
     char key = (char)waitKey(30); // delay N millis, usually long enough to display and capture input
 
     switch (key) {
@@ -64,6 +101,7 @@ int main(int ac, char **av) {
     help(av);
     return 0;
   }
+  
 
   std::string arg = parser.get<std::string>("@input");
   if (arg.empty()) {
@@ -81,5 +119,6 @@ int main(int ac, char **av) {
     help(av);
     return 1;
   }
+
   return process(capture);
 }
